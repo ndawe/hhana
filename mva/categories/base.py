@@ -24,8 +24,6 @@ class Category(object):
     is_control = False
     # category used for normalization
     norm_category = None
-    qcd_shape_region = 'nOS' # no track cut
-    target_region = 'OS_ISOL'
     cuts = Cut()
     common_cuts = Cut()
     from .. import samples

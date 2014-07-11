@@ -259,7 +259,7 @@ test:
 
 .PHONY: norms
 norms:
-	@for year in 2011 2012; do \
+	@for year in 2012; do \
 		for model in OS_NONISOL nOS nOS_ISOL nOS_NONISOL SS SS_ISOL SS_NONISOL NONISOL; do \
 			PBS_LOG=log PBS_QUEUE=short run-cluster ./norm --fakes-region $${model} --year $${year}; \
 			PBS_LOG=log PBS_QUEUE=short run-cluster ./norm --no-embedding --fakes-region $${model} --year $${year}; \
