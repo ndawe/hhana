@@ -23,9 +23,9 @@ category = Category_Preselection
 # distribution to fit
 field = 'dEta_tau1_tau2'
 if args.year == 2011:
-    template = Hist(4, 0, 2)
+    template = Hist(8, 0, 2.5)
 else:
-    template = Hist(5, 0, 2)
+    template = Hist(10, 0, 2.5)
 
 qcd_scale, qcd_scale_error, \
 ztt_scale, ztt_scale_error = analysis.fit_norms(
