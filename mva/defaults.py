@@ -1,4 +1,4 @@
 TARGET_REGION = 'OS'
 FAKES_REGION = 'nOS_NONISOL'
-TRAIN_FAKES_REGION = 'NONISOL' # more events
+TRAIN_FAKES_REGION = 'nOS' # more events
 NORM_FIELD = 'dEta_tau1_tau2'
