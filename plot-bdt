@@ -106,16 +106,14 @@ def plot_bdt(category, workspace_binning=True):
     # no overflow
     assert(h.overflow() == 0)
     assert(h.underflow() == 0)
-    assert(h_swap.overflow() == 0)
-    assert(h_swap.underflow() == 0)
+    #assert(h_swap.overflow() == 0)
+    #assert(h_swap.underflow() == 0)
     # sanity
-    assert(h.integral() == h_swap.integral())
+    #assert(h.integral() == h_swap.integral())
     fig = draw_ratio(h, h_swap,
                      field='BDT Score', category=category,
                      logy=True, normalize=False) 
     fig.SaveAs('data_consistency_{0}{1}.png'.format(category.name, suffix))
-
-    return
 
     ########################################################################
     # show the background model and data in the mass sideband control region
@@ -150,6 +148,7 @@ def plot_bdt(category, workspace_binning=True):
 
     ##########################################################################
     # show the background model and 125 GeV signal in the fakes control region
+    """
     log.info("plotting classifier output in the fakes control region ...")
         
     for region_label, fakes_region in (
@@ -197,6 +196,7 @@ def plot_bdt(category, workspace_binning=True):
             output_formats=args.output_formats,
             show_ratio=True,
             output_dir=plot_dir('bdt'))
+    """
 
     ###################################################################
     # show the background model and 125 GeV signal in the signal region
