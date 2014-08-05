@@ -671,6 +671,6 @@ class Classifier(object):
             else:
                 # logistic tranformation used by TMVA (MethodBDT.cxx)
                 scores = -1 + 2.0 / (1.0 +
-                    np.exp(-self.clfs[0].n_estimators * scores / 10))
+                    np.exp(-self.clfs[0].n_estimators * self.clfs[0].learning_rate * scores))
 
         return scores, weight
