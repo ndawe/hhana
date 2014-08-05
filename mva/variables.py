@@ -432,7 +432,7 @@ VARIABLES = {
         'title': r'$\Delta R(\tau,\tau)$',
         'root': '#font[152]{#Delta}#font[52]{R}(#font[152]{#tau},#font[152]{#tau})',
         'filename': 'dr_tau1_tau2',
-        'binning': (8, 0.8, 2.4),
+        'binning': (10, 0.8, 2.8),
         'ypadding': (0.5, 0),
     },
     'dPhi_tau1_tau2': {
