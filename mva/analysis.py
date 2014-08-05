@@ -75,7 +75,7 @@ class Analysis(object):
                  qcd_shape_systematic=True,
                  random_mu=False,
                  mu=1.,
-                 ggf_weight=True,
+                 ggf_weight=False,
                  suffix=None,
                  norm_field=NORM_FIELD):
         self.year = year

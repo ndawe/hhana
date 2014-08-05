@@ -62,7 +62,7 @@ class Higgs(MC, Signal):
                  mode=None, modes=None,
                  mass=None, masses=None,
                  sample_pattern=None, # i.e. PowhegJimmy_AUET2CT10_ggH{0:d}_tautauInclusive
-                 ggf_weight=True,
+                 ggf_weight=False,
                  suffix=None,
                  label=None,
                  **kwargs):
