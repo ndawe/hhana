@@ -297,7 +297,7 @@ plots:
 mva-plots:
 	@for year in 2011 2012; do \
 		for category in vbf boosted; do \
-			PBS_LOG=log PBS_MEM=12gb run-cluster ./plot-bdt --unblind --systematics --year $${year} --category-names $${category} --output-formats eps png; \
+			PBS_LOG=log PBS_MEM=12gb run-cluster ./plot-bdt --unblind --year $${year} --category-names $${category} --output-formats eps png; \
 		done; \
 	done
 
