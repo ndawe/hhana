@@ -288,16 +288,16 @@ model-plots:
 plots:
 	@for year in 2011 2012; do \
 		for category in vbf boosted rest; do \
-			PBS_LOG=log PBS_MEM=12gb run-cluster ./plot-features --unblind --systematics --show-ratio --year $${year} --category-names $${category} --output-formats eps png; \
+			PBS_LOG=log PBS_MEM=12gb run-cluster ./plot-features --unblind --show-ratio --year $${year} --category-names $${category} --output-formats eps png; \
 		done; \
-		PBS_LOG=log PBS_MEM=12gb run-cluster ./plot-features --unblind --systematics --show-ratio --year $${year} --categories presel --output-formats eps png; \
+		PBS_LOG=log PBS_MEM=12gb run-cluster ./plot-features --unblind --show-ratio --year $${year} --categories presel --output-formats eps png; \
 	done
 
 .PHONY: mva-plots
 mva-plots:
 	@for year in 2011 2012; do \
 		for category in vbf boosted; do \
-			PBS_LOG=log PBS_MEM=12gb run-cluster ./plot-bdt --unblind --systematics --year $${year} --category-names $${category} --output-formats eps png; \
+			PBS_LOG=log PBS_MEM=12gb run-cluster ./plot-bdt --unblind --year $${year} --category-names $${category} --output-formats eps png; \
 		done; \
 	done
 
