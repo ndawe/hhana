@@ -195,12 +195,28 @@ def plot_from_frame(file, name, fit_var, category, year,
     if unblind is not True:
         blind_graph(data, unblind)
         blind_graph(ratio, unblind)
+    
+    if fit_var == 'mmc':
+        widths = list(model[0].xwidth())
+        # divide bin contents by bin widths
+        for hist in model:
+            for bin in hist.bins():
+                bin.value /= hist.xwidth(bin.idx)
+                bin.error /= hist.xwidth(bin.idx)
+        for graph in (graph_bkg, data):
+            for i in xrange(len(graph)):
+                width = widths[i]
+                x, y = graph[i] 
+                graph.SetPoint(i, x, y / width)
+                low, high = graph.yerr(i)
+                xlow, xhigh = graph.xerr(i)
+                graph.SetPointError(i, xlow, xhigh, low / width, high / width)
 
     for logy in (False, True):
         plot_name = 'postfit_{0}'.format(name)
         canvas = RatioPlot(
             xtitle=xtitle,
-            ytitle='Events',
+            ytitle='Events / GeV' if fit_var == 'mmc' else 'Events',
             ratio_title='Data / Model',
             ratio_limits=(0, 2),
             prune_ratio_ticks=True,
@@ -211,7 +227,7 @@ def plot_from_frame(file, name, fit_var, category, year,
             plot_name += '_logy'
         canvas.draw('main', plottables,
                     ypadding=(0.45 if logy else 0.3, 0),
-                    logy_crop_value=1e-1)
+                    logy_crop_value=1e-2 if fit_var == 'mmc' else 1e-1)
         canvas.draw('ratio', [ratio_bkg, ratio])
         x, y = canvas.axes('main')
         x.limits = model[0].bounds()
