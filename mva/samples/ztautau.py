@@ -6,6 +6,7 @@ from rootpy.io import root_open
 
 # root_numpy imports
 from root_numpy import rec2array, evaluate
+import numpy as np
 
 # local imports
 from . import log
@@ -108,7 +109,17 @@ class Embedded_Ztautau(Ztautau, SystematicsSample):
             return
         arr = rec2array(rec[['tau1_pt', 'tau2_pt']])
         weights = evaluate(self.trigger_correct, arr)
-        return [weights]
+
+        # TEST TEST TEST
+        # weight 3p up by 20% and 1p down by 5%
+        log.warning("1P/3P WEIGHTS APPLIED")
+        tau1_track = rec['tau1_numTrack']
+        tau2_track = rec['tau2_numTrack']
+        prong_weights = [0.95, 1.2]
+        tau1_weight = np.take(prong_weights, tau1_track > 1)
+        tau2_weight = np.take(prong_weights, tau2_track > 1)
+
+        return [weights, tau1_weight, tau2_weight]
 
     def systematics_components(self):
         # No FAKERATE for embedding since fakes are data
