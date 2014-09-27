@@ -115,7 +115,7 @@ class Embedded_Ztautau(Ztautau, SystematicsSample):
         log.warning("1P/3P WEIGHTS APPLIED")
         tau1_track = rec['tau1_numTrack']
         tau2_track = rec['tau2_numTrack']
-        prong_weights = [0.95, 1.2]
+        prong_weights = [1., 1.1]
         tau1_weight = np.take(prong_weights, tau1_track > 1)
         tau2_weight = np.take(prong_weights, tau2_track > 1)
 
