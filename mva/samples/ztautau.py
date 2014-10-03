@@ -84,6 +84,8 @@ class Embedded_Ztautau(Ztautau, SystematicsSample):
             'embedding_trigger_weight', True)
         self.tau_trigger_eff = kwargs.pop(
             'tau_trigger_eff', True)
+        self.prong_fraction = kwargs.pop(
+            'prong_fraction', 1.1)
         super(Embedded_Ztautau, self).__init__(*args, **kwargs)
         with root_open(os.path.join(DAT_DIR, 'embedding_corrections.root')) as file:
             self.trigger_correct = file['ebmc_weight_{0}'.format(self.year % 1000)]
@@ -115,7 +117,7 @@ class Embedded_Ztautau(Ztautau, SystematicsSample):
         log.warning("1P/3P WEIGHTS APPLIED")
         tau1_track = rec['tau1_numTrack']
         tau2_track = rec['tau2_numTrack']
-        prong_weights = [1., 1.1]
+        prong_weights = [1., self.prong_fraction]
         tau1_weight = np.take(prong_weights, tau1_track > 1)
         tau2_weight = np.take(prong_weights, tau2_track > 1)
 

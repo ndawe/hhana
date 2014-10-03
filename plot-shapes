@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 # python imports
 import os
+
 # rootpy/ROOT imports
+from rootpy.plotting import Hist
 from rootpy.extern.argparse import ArgumentParser
 from rootpy.utils.path import mkdir_p
 
@@ -19,6 +21,7 @@ from mva.systematics import iter_systematics
 from mva import save_canvas, log
 from mva.defaults import TARGET_REGION
 from mva.plotting.compare import compare as plotting_compare
+from mva.plotting.compare import compare_clf as plotting_compare_clf
 
 parser = ArgumentParser()
 parser.add_argument('--year', type=int, default=2012, choices=(2011, 2012))
@@ -188,3 +191,13 @@ if not args.shapes or 'data_isolation' in args.shapes:
         compare(htt, htt_isol, category, 'data_isolation',
                 region_a='OS',
                 region_b='OS_ISOL')
+
+if not args.shapes or '1p3p' in args.shapes:
+    ana = Analysis(2012)
+    emb = Embedded_Ztautau(args.year, prong_fraction=1, label='Default')
+    emb_1p3p = Embedded_Ztautau(args.year, prong_fraction=1.3, label='+30% 3p')
+    for category in CATEGORIES['mva']:
+        clf = ana.get_clf(category, load=True)
+        template = Hist(clf.binning(args.year))
+        plotting_compare_clf(emb, emb_1p3p, clf, template,
+                             category, '1p3p', args.year, logy=True)

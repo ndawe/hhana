@@ -1,5 +1,6 @@
 from rootpy.plotting import Legend, Hist, Graph
 from rootpy.plotting.style.atlas.labels import ATLAS_label
+from root_numpy import fill_hist
 
 import ROOT
 
@@ -138,3 +139,24 @@ def compare(a, b, field_dict, category, name, year,
         for output in ('eps', 'png'):
             save_canvas(plot, path, '{0}/shape_{0}_{1}_{2}_{3}.{4}'.format(
                 name, field, category.name, year % 1000, output))
+
+
+def compare_clf(a, b, clf, template,
+                category, name, year,
+                region_a=None, region_b=None,
+                path='plots/shapes', **kwargs):
+    if region_a is None:
+        region_a = TARGET_REGION
+    if region_b is None:
+        region_b = TARGET_REGION
+    a_hist = template.Clone(title=a.label)
+    b_hist = template.Clone(title=b.label)
+    a_scores, a_weights = a.scores(clf, category, region_a)['NOMINAL']
+    b_scores, b_weights = b.scores(clf, category, region_b)['NOMINAL']
+    fill_hist(a_hist, a_scores, a_weights)
+    fill_hist(b_hist, b_scores, b_weights)
+    plot = draw_ratio(a_hist, b_hist,
+                      'BDT output', category, **kwargs)
+    for output in ('eps', 'png'):
+        save_canvas(plot, path, '{0}/shape_{0}_{1}_{2}_{3}.{4}'.format(
+            name, 'bdt', category.name, year % 1000, output))
