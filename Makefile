@@ -296,7 +296,7 @@ mva-plots:
 
 .PHONY: train-vbf
 train-vbf:
-	@PBS_LOG=log PBS_PPN=$(PBS_PPN_MAX) run-cluster ./train vbf --masses 125 --procs $(PBS_PPN_MAX) --max-fraction 0.15 --min-fraction-steps 100
+	@PBS_LOG=log PBS_PPN=$(PBS_PPN_MAX) run-cluster ./train vbf --masses 125 --procs $(PBS_PPN_MAX) --max-fraction 0.30 --min-fraction-steps 100
 
 .PHONY: train-boosted
 train-boosted:
