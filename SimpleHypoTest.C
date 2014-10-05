@@ -50,7 +50,7 @@ void SimpleHypoTest(const char* infile =  "workspaces/final/hh_nos_nonisol_ebz_m
   std::cout << "\n\nRun now FrequentistCalculator.....\n";
 
   FrequentistCalculator   fc(*data, *sbModel, *bModel);
-  fc.SetToys(2000, 500);    // 2000 for null (B) and 500 for alt (S+B) 
+  fc.SetToys(2000, 1000);    // 2000 for null (B) and 1000 for alt (S+B) 
 
   // create the test statistics
   ProfileLikelihoodTestStat profll(*sbModel->GetPdf());
