@@ -5,6 +5,7 @@ from rootpy.extern.argparse import ArgumentParser
 from rootpy.plotting import Canvas, Pad, Legend, Hist, Hist2D, Graph, set_style
 from rootpy.plotting.utils import draw, tick_length_pixels
 from rootpy.plotting.style.atlas.labels import ATLAS_label
+from rootpy.utils.path import mkdir_p
 from root_numpy import fill_hist
 import ROOT
 from ROOT import TLatex, TLine
@@ -90,11 +91,13 @@ def draw_param(params, param, name=None, path='.', bins=20, bins2d=20):
     draw(hist_mva, pad=canvas, xtitle='{0}_{{MVA}}'.format(name), ytitle='pseudo-experiments')
     draw_fit(hist_mva, canvas)
     canvas.SaveAs(os.path.join(path, '{0}_mva.png'.format(param)))
+    canvas.SaveAs(os.path.join(path, '{0}_mva.eps'.format(param)))
 
     canvas = Canvas()
     draw(hist_cba, pad=canvas, xtitle='{0}_{{CBA}}'.format(name), ytitle='pseudo-experiments')
     draw_fit(hist_cba, canvas)
     canvas.SaveAs(os.path.join(path, '{0}_cba.png'.format(param)))
+    canvas.SaveAs(os.path.join(path, '{0}_cba.eps'.format(param)))
 
     canvas = Canvas()
     if _name is None:
@@ -104,6 +107,7 @@ def draw_param(params, param, name=None, path='.', bins=20, bins2d=20):
     draw(hist_diff, pad=canvas, xtitle=xtitle, ytitle='pseudo-experiments')
     diff_mean, diff_sigma = draw_fit(hist_diff, canvas)
     canvas.SaveAs(os.path.join(path, '{0}_diff.png'.format(param)))
+    canvas.SaveAs(os.path.join(path, '{0}_diff.eps'.format(param)))
 
     canvas = Canvas()
     hist_mva_cba.xaxis.title = '{0}_{{MVA}}'.format(name)
@@ -118,6 +122,7 @@ def draw_param(params, param, name=None, path='.', bins=20, bins2d=20):
     gaus_label.SetTextColor(ROOT.kRed)
     gaus_label.Draw()
     canvas.SaveAs(os.path.join(path, '{0}_mva_cba.png'.format(param)))
+    canvas.SaveAs(os.path.join(path, '{0}_mva_cba.eps'.format(param)))
 
     return diff_mean, diff_sigma, rho
 
@@ -201,6 +206,9 @@ if __name__ == '__main__':
     parser.add_argument('--bins2d', type=int, default=20)
     parser.add_argument('file')
     args = parser.parse_args()
+
+    if not os.path.exists(args.path):
+        mkdir_p(args.path)
 
     params = pickle.load(open(args.file, 'r'))
 
