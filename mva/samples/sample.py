@@ -236,7 +236,7 @@ class Sample(object):
                              min_score=min_score,
                              max_score=max_score,
                              inplace=True)
-            return field_hist
+            return field_hist, None, None
         rec, weights = self.draw_array(
             field_hist, category, region,
             cuts=cuts,
