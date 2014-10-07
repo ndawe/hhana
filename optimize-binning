@@ -435,6 +435,8 @@ if __name__ == '__main__':
         plt.tight_layout()
         fig.savefig('plots/binning/binning_{0}_{1}_{2}.png'.format(
                     category.name, mass, year % 1000))
+        fig.savefig('plots/binning/binning_{0}_{1}_{2}.eps'.format(
+                    category.name, mass, year % 1000))
 
         print category.name
         print
