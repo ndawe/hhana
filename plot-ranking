@@ -53,7 +53,8 @@ def matched(name, patterns):
 def plot_ranking(name, file, outdir,
                  patterns=None, top=None,
                  row_pixels=30,
-                 label_pixels=None):
+                 label_pixels=None,
+                 atlas='Internal'):
     if label_pixels is None:
         label_pixels = min(20, int(row_pixels * 0.6))
     # make the ranking plot
@@ -183,7 +184,7 @@ def plot_ranking(name, file, outdir,
     pulls.Draw('SAME')
     ATLAS_label(
         0.03, 1. - pad1.GetTopMargin() / 2.,
-        text="Internal",
+        text=atlas,
         sqrts=None, pad=pad1, sep=0.1,
         textsize=30)
     mu_legend = Legend(
@@ -215,6 +216,7 @@ if __name__ == '__main__':
     parser.add_argument('--label-pixels', type=int, default=None)
     parser.add_argument('--patterns', nargs='+', default=None)
     parser.add_argument('--top', type=int, default=None)
+    parser.add_argument('--atlas', default='Internal')
     args = parser.parse_args()
 
     input = os.path.splitext(args.file)[0]
@@ -229,4 +231,5 @@ if __name__ == '__main__':
         patterns=args.patterns,
         top=args.top,
         row_pixels=args.row_pixels,
-        label_pixels=args.label_pixels)
+        label_pixels=args.label_pixels,
+        atlas=args.atlas)
