@@ -72,16 +72,28 @@ def plot_ranking(name, file, outdir,
         postfit_low, postfit_nom, postfit_high = info['poi_postfit']
         if postfit_low > postfit_high:
             postfit_low, postfit_high = postfit_high, postfit_low
+
         postfit_low = min(postfit_nom, postfit_low)
         postfit_high = max(postfit_nom, postfit_high)
-        prefit_impact_low = (prefit_nom - prefit_low) / prefit_nom
-        prefit_impact_high = (prefit_high - prefit_nom) / prefit_nom
-        postfit_impact_low = (postfit_nom - postfit_low) / postfit_nom
-        postfit_impact_high = (postfit_high - postfit_nom) / postfit_nom
+
+        #prefit_impact_low = (prefit_nom - prefit_low) / prefit_nom
+        #prefit_impact_high = (prefit_high - prefit_nom) / prefit_nom
+        #postfit_impact_low = (postfit_nom - postfit_low) / postfit_nom
+        #postfit_impact_high = (postfit_high - postfit_nom) / postfit_nom
+        # HACK
+        prefit_impact_low = (prefit_nom - prefit_low) / 0.8
+        prefit_impact_high = (prefit_high - prefit_nom) / 0.8
+        postfit_impact_low = (postfit_nom - postfit_low) / 0.8
+        postfit_impact_high = (postfit_high - postfit_nom) / 0.8
+
         # for ranking use full width of postfit impact
+        #postfit_impact = (
+        #    max(postfit_high, postfit_low, postfit_nom) -
+        #    min(postfit_high, postfit_low, postfit_nom)) / postfit_nom
         postfit_impact = (
             max(postfit_high, postfit_low, postfit_nom) -
-            min(postfit_high, postfit_low, postfit_nom)) / postfit_nom
+            min(postfit_high, postfit_low, postfit_nom)) / 0.8
+
         ranking.append(
             (np, postfit_impact,
                 (prefit_impact_low, prefit_impact_high),
@@ -103,7 +115,7 @@ def plot_ranking(name, file, outdir,
     # inset for NormFactors
     #pad2 = Pad(0.63, 0.1, 0.94, 0.22, 0)
     xaxis, yaxis = pad1.axes(xlimits=(-2, 2), ylimits=(-0.5 - 1, n_points + 1 - 0.5))
-    xaxis.title = '(#theta_{fit} - #theta_{0}) / #Delta#theta'
+    xaxis.title = '(#hat{#theta} - #theta_{0}) / #Delta#theta'
     tick_length_pixels(pad1, xaxis, yaxis, row_pixels, 0)
     yaxis.SetLabelOffset(999)
     # make pull graph
@@ -143,15 +155,15 @@ def plot_ranking(name, file, outdir,
             pulls_1sigma.SetPoint(i, mid-1, i)
             pulls.SetPoint(i, mid-1, i)
             pulls.SetPointError(i, 1, 1, 0, 0)
-        prefit_graph.SetPointError(i, prefit_impact_low * 4, prefit_impact_high * 4, 0.5, 0)
-        postfit_graph.SetPointError(i, postfit_impact_low * 4, postfit_impact_high * 4, 0, 0.5)
+        prefit_graph.SetPointError(i, prefit_impact_low * 2, prefit_impact_high * 2, 0.5, 0)
+        postfit_graph.SetPointError(i, postfit_impact_low * 2, postfit_impact_high * 2, 0, 0.5)
     nuis_name = TLatex()
     nuis_name.SetTextAlign(32)
     nuis_name.SetTextSize(label_pixels)
     pad1.cd()
     # mu axis
-    mu_axis = TGaxis(-2, n_points + 1 - 0.5, 2, n_points + 1 - 0.5, -0.5, 0.5, 510, '-S')
-    mu_axis.SetTitle('#Delta#hat{#mu} / #hat{#mu}')
+    mu_axis = TGaxis(-2, n_points + 1 - 0.5, 2, n_points + 1 - 0.5, -1, 1, 510, '-S')
+    mu_axis.SetTitle('#Delta#hat{#mu} / #sigma_{tot}')
     mu_axis.SetLabelFont(xaxis.GetLabelFont())
     mu_axis.SetTitleFont(xaxis.GetTitleFont())
     mu_axis.SetLabelSize(xaxis.GetLabelSize())

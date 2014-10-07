@@ -11,6 +11,7 @@ from root_numpy import matrix
 import numpy as np
 import matplotlib.pyplot as plt
 import logging
+import mva # mpl setup
 
 log = logging.getLogger(os.path.basename(__file__))
 if not os.environ.get("DEBUG", False):
@@ -136,6 +137,7 @@ plot_corrcoef_matrix(
     fontsize=7, cmap='jet',
     cmap_text=make_colormap(['white', 0.33, 'black', 0.66, 'white']),
     grid=True, axes=ax)
+plt.tight_layout()
 if not args.unblind:
     filename = os.path.join(output, 'correlations_expected.png')
 else:
