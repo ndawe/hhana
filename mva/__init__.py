@@ -139,3 +139,27 @@ def set_hsg4_style(shape='square'):
     set_style(style)
 
 set_hsg4_style()
+
+# mpl setup
+
+from matplotlib import rc
+
+def package_path(name):
+    return os.path.splitext(os.path.abspath('latex/%s.sty' % name))[0]
+
+LATEX_PREAMBLE = '''
+\usepackage[EULERGREEK]{%s}
+\sansmath
+''' % package_path('sansmath')
+
+"""
+LATEX_PREAMBLE = '''
+\usepackage[math-style=upright]{%s}
+''' % package_path('unicode-math')
+"""
+
+#plt.rcParams['ps.useafm'] = True
+#rc('text', usetex=True)
+#rc('font', family='sans-serif')
+rc('text.latex', preamble=LATEX_PREAMBLE)
+#plt.rcParams['pdf.fonttype'] = 42

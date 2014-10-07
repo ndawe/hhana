@@ -301,15 +301,18 @@ if __name__ == '__main__':
         b = (b, bw)
         
         # setup the mpl figure and axes
-        fig, (ax1, ax_rebin) = plt.subplots(nrows=1, ncols=2, figsize=(15, 6))
+        fig, (ax1, ax_rebin) = plt.subplots(nrows=1, ncols=2, figsize=(12, 6))
         ax1.set_ylabel('Significance')
-        ax1.set_xlabel('BDT Score')
+        ax1.set_xlabel('BDT output')
+        ax1.spines["top"].set_edgecolor('green')
         ax2 = ax1.twiny()
-        ax2.set_xlabel('Number of Fixed-width Bins')
+        ax2.set_xlabel('Number of Fixed-width Bins', color='green')
+        ax2.tick_params(axis='x', colors='green')
+        ax2.spines["top"].set_edgecolor('green')
         ax3 = ax1.twinx()
         ax3.set_ylabel('Events')
         ax3.set_yscale('log')
-        ax_rebin.set_xlabel('BDT Score')
+        ax_rebin.set_xlabel('BDT output')
         # share ylabel from right of left plot
         #ax_rebin.set_ylabel('Events')
         ax_rebin.set_yscale('log')
@@ -365,7 +368,7 @@ if __name__ == '__main__':
         # show significance vs middle bin edge location
         ax1.plot(edges, sigs, color='black', linestyle=next(linecycler))
         ax1.plot((best_edge, best_edge), (0, abs(best_sig)),
-                    color='black', linestyle='-', linewidth=2)
+                 color='black', linestyle='-', linewidth=3)
         binning.insert(1, float(best_edge))
         
         # continue splitting right
@@ -386,9 +389,9 @@ if __name__ == '__main__':
                 # no improvement or impossible to add an edge
                 break
             # show significance vs middle bin edge location
-            ax1.plot(edges, sigs, color='red', linestyle=next(linecycler))
+            ax1.plot(edges, sigs, color='black', linestyle=next(linecycler))
             ax1.plot((best_edge, best_edge), (0, abs(best_sig)),
-                     color='red', linestyle='-', linewidth=2)
+                     color='black', linestyle='-', linewidth=3)
             binning.insert(-1, float(best_edge))
             prev_best_sig = best_sig
         
@@ -410,7 +413,7 @@ if __name__ == '__main__':
             # show significance vs middle bin edge location
             ax1.plot(edges, sigs, color='black', linestyle=next(linecycler))
             ax1.plot((best_edge, best_edge), (0, abs(best_sig)),
-                     color='black', linestyle='-', linewidth=2)
+                     color='black', linestyle='-', linewidth=3)
             binning.insert(1, float(best_edge))
             prev_best_sig = best_sig
         
@@ -433,6 +436,7 @@ if __name__ == '__main__':
         #handles3, labels3 = ax3.get_legend_handles_labels()
         #ax2.legend(handles1+handles2+handles3, labels1+labels2+labels3)
         plt.tight_layout()
+        plt.subplots_adjust(wspace=0.35)
         fig.savefig('plots/binning/binning_{0}_{1}_{2}.png'.format(
                     category.name, mass, year % 1000))
         fig.savefig('plots/binning/binning_{0}_{1}_{2}.eps'.format(
